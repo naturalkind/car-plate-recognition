@@ -1,0 +1,94 @@
+<div id="servimg" style="display: block;position: relative;margin: 0 auto;"></div>
+<div style="width:600px;margin:0 auto;">
+<input type="file" id="input" style="display:none;width: 100%;margin-bottom: 10px;"/>
+<label for="input" class="image_file" style="font-family: arial;width: 100%;padding-top: 5px;padding-bottom: 5px;color:#ffffff;text-align: center;background: #507299;display: block;margin-bottom: 10px;">
+загрузка картинки</label>
+<canvas width="0" height="0" id="canvas" style="display:block;margin: 0 auto;"></canvas>
+<canvas width="0" height="0" id="canvas2" style="display:block;margin: 0 auto;"></canvas>
+<button id="send" onclick="send()" style="display:block;width: 100%;background: #b9b9b9;border-radius: 5px;border:none;padding: 5px;margin-top: 10px;">Отправить</button>
+<p>Пример работы нейронной сети. </p>
+</div>
+<div id="b_info" ><button id="CL" onclick="CL()">ЗАКРЫТЬ</button><div id="a_info" ></div></div>
+<style>
+body {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+}
+#bd:hover {background:#d87373;color:white;}
+#b_info{
+display: none;
+position: absolute;
+background: #f1f1f1;
+width: 676px;
+left: 0;
+top: 0;
+bottom: 0;
+right: 0;
+margin: 0 auto;
+overflow: auto;
+}
+#CL {
+    margin: 0 auto;
+    display: block;
+}
+</style>
+<script>
+var input = document.getElementById("input");
+input.addEventListener("change", handleFiles);
+function handleFiles(e) {
+	var canvas = document.getElementById("canvas");
+	var ctx = canvas.getContext("2d");
+	var img = new Image;
+	img.src = URL.createObjectURL(e.target.files[0]);
+	console.log(canvas.toDataURL());
+	img.onload = function() {
+		canvas.width=img.width;
+		canvas.height=img.height;
+		ctx.drawImage(img, 0,0);
+		console.log("картинка готова к отправке");
+		}
+	}
+
+function toCanv(e) {
+	var canvas = document.getElementById("canvas2");
+	var ctx = canvas.getContext("2d");
+
+	image = "data:image/jpeg;base64,"+e;
+	var img = new Image();
+	img.onload = function () {
+	    canvas.width=img.width;
+	    canvas.height=img.height;
+	    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+	}
+	img.src = image;
+	}
+
+function send(){
+	console.log("ok");
+	var http = new XMLHttpRequest();
+	http.open("POST", "http://178.158.131.41:8888/");
+	http.setRequestHeader("Content-type","application/json; charset=utf-8");
+        var im = canvas.toDataURL().split(',')[1]
+	var work = JSON.stringify({"image": im, "on":"on"});
+	console.log(work);
+	http.onreadystatechange = function (){
+		if(http.readyState == 4){
+                        var s = JSON.parse(http.responseText);
+			alert(s["text"]);
+                        toCanv(s["img"]);
+                        }};
+			http.send(work);
+		};
+
+function CL(){
+	console.log("ok");
+	var b_info = document.getElementById('b_info');
+	b_info.style.display = "none";
+	document.body.style.background = "#FFFFFF";
+	var a_info = document.getElementById('a_info');
+	a_info.innerHTML = '';
+};
+</script>
