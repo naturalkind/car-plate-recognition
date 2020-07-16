@@ -15,14 +15,6 @@ import io
 from GPUi4 import gg as get_small_images
 from tornado.escape import json_encode
 
-def getype(tp):
-                try:
-                   
-                   tp = tp['type']
-                   #print tp
-                except KeyError:
-                   tp = 'chi'
-                return tp
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
@@ -37,8 +29,6 @@ class MainHandler(tornado.web.RequestHandler):
                 start = time.time()
                 file_bytes = numpy.asarray(bytearray(io.BytesIO(base64.b64decode(data_json['image'])).read()), dtype=numpy.uint8)
                 nameFile = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
-
-                #print ("CLASS:", tp)
                 
                 answer = get_small_images(nameFile) 
                 end = time.time()
