@@ -54,30 +54,6 @@ class MainHandler(tornado.web.RequestHandler):
                 op = json_encode(obj)
                 self.write(op)
 
-#                if answer != []:
-#                   sl = True
-#                else:
-#                   answer = ['0']
-#                   sl = False
-#                #print img
-#		#ee =  s[0].replace(' ', '')
-#                try:
-#                   #obj = {"id": data_json['id'], "text": answer, "solved": sl, "status": "OK", "type": "signs", "time": (time.time() - start_time), 'img': base64.b64encode(img)}
-#                   obj = {"id": data_json['id'], "text": answer[0], "solved": True, "status": "OK", "type": "bus", "time": (time.time() - start_time)}
-#                except:
-#                   obj = {"text": answer[0], "solved": sl, "status": "OK", "type": "bus", "time": (time.time() - start_time), 'img': base64.b64encode(answer[1])}
-#		op = json_encode(obj)
-#		self.write(op)
-"""
-{"id": "12345", "text": ["6", "8", "10", "14"], "solved": true, "status": "OK", "type": "signs", "time": 0.03}
-
-id - ID картинки (строка)
-text - массив с номерами квадратов
-solved - true/false - распознано или нет
-status - OK значит все ок, не OK - ошибка обработки запроса
-type - тип задания, в нашем случае будет signs
-time - время обработки (для теста можно отдавать что-то типа 0.01)
-"""
 def make_app():
     return tornado.web.Application([
         (r"/", MainHandler),
@@ -86,8 +62,7 @@ def make_app():
 
 if __name__ == "__main__":
     app = make_app()
-    app.listen(8888, address='192.168.1.137')
-    #app.listen(8888)
+    app.listen(8888)
     tornado.ioloop.IOLoop.current().start()
 
 
