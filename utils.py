@@ -20,16 +20,10 @@ def load_weights(var_list, weights_file):
     i = 0
     assign_ops = []
     while i < len(var_list) - 1:
-        #print "EEERRRRORRR"
         var1 = var_list[i]
         var2 = var_list[i + 1]
         # do something only if we process conv layer
-        #print "WATCH"#, var_list
-        #print ">>>>>>>>>>>>>>", var1, var1.name.split('/')[-2]
-        #print ">>>>>>>>>>>>>>", var2, var2.name.split('/')[-2]#.name.split('/')[-2]
         if 'Conv' in var1.name.split('/')[-2]:
-            #print i, var1.name.split('/')[-2], var2.name.split('/')[-2]
-            #print i, var1, var2 
             # check type of next layer
             if 'BatchNorm' in var2.name.split('/')[-2]:
                 # load batch norm params
