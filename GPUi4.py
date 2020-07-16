@@ -2,15 +2,11 @@
 import cv2, os, glob, time, sys
 import numpy as np
 import tensorflow as tf
-import base64, glob#, cStringIO
+import base64, glob
 
 from utils import load_weights, detections_boxes
 from yolo_v3_gpu import yolo_v3
 
-#from PIL import ImageFont, ImageDraw
-
-#class_names = 'coco2.names'
-#weights_file = 'yolov3_chi.weights'
 class_names = 'plate.names'
 weights_file = 'yolov3.backup'#'car_plate.weights'
 #class_names = 'coco.names'
@@ -160,21 +156,7 @@ def draw_boxes(image, boxes, scores, labels, classes, detection_size, img):
     for i in range(len(labels)): # for each bounding box, do:
         bbox, score, label = boxes[i], scores[i], classes[labels[i]]
         bbox_text = "%s %.2f" %(label, score)
-        # convert_to_original_size
-#        detection_size, original_size = float(detection_size)/float(img.shape[0]), float(detection_size)/float(img.shape[1]) #np.array(detection_size), np.array(image.shape)
-#        box = bbox.reshape(2, 2) * ratio
-#        print (detection_size, original_size)
-#        ratio = np.array((img.shape[0], img.shape[1])) / np.array((detection_size, detection_size))
         print (bbox)
-#        box = bbox.reshape(2, 2) * ratio
-#        s = list(box.reshape(-1))
-#        
-##        ratio = float(original_size) / float(detection_size)
-##        bbox = list((bbox.reshape(2,2) * ratio).reshape(-1))
-##        #print  bbox_text, detection_size, original_size, image.shape, bbox, ratio, new.shape
-        #detection_size, original_size = np.array(detection_size), np.array(image.shape[1])
-        #ratio = float(original_size) / float(detection_size)
-        #bbox = list((bbox.reshape(2,2) * ratio).reshape(-1))
         coord = [abs(int(x)) for x in bbox]
 #        
 #float(img.shape[0]/416)
@@ -187,26 +169,12 @@ def draw_boxes(image, boxes, scores, labels, classes, detection_size, img):
         o3 = coord[3]
         #print (box.shape, s, ratio, coord, bbox,o0, o1, o2, o3)
         if "plate" == classes[labels[i]].split("\n")[0]:# or "bus" == classes[labels[i]]:
-                #print (o1,o3, "----",o0,o2)
-                
-                #
-                #image = cv2.resize(image,(128,64))
                 img_t = np.array(image[o1-10:o3+10, o0-10:o2+10, :])#np.uint8
                 img_resized0 = cv2.resize(img_t, (128, 64))
-                #retval, image = cv2.imencode('.jpg', )
-                
-                print (">>>>>>>>>>", coord, img_t.shape, img_resized0.shape)
-                #modif_detect
-                #
-                #
-                
                 img_ = img_resized0[:,:,0] / 255.
                 img_ = np.reshape(img_, [1,64,128])
-                print (img_.shape)
                 ssss = ocr.modif_detect(img_) #[:,:,:1]/255.
                 answ.append(ssss)
-#                #ocr.ocr_img(np.array(image[o1-10:o3+10, o0-10:o2+10, :])))
-#        #"""
         o0 = coord[0]-10
         o1 = coord[1]-10
         o2 = coord[2]+10
@@ -216,7 +184,6 @@ def draw_boxes(image, boxes, scores, labels, classes, detection_size, img):
 
         image[o3-3:o3, o0:o2+3, :] = _COLOR  # x
         image[o1-3:o1, o0:o2+3, :] = _COLOR  # x
-        #"""                
 
     return image, cord, answ #
     #return None, None, None
@@ -224,35 +191,15 @@ def draw_boxes(image, boxes, scores, labels, classes, detection_size, img):
 import ocr_s as ocr
 def gg(img):
         if img.shape[0] != 100:
-             #try:
-               #img_resized0 = cv2.resize(img, (416, 416))
-               #image, answ = ocr.ocr_img(img_resized0)
-               #retval, image = cv2.imencode('.jpg', np.array(image))
-                #img.resize(size=(size, size))
-               #return image, answ
-
-
                 img_resized0 = cv2.resize(img, (size, size)) #img.resize(size=(size, size))
                 img_resized = np.reshape(img_resized0, [1, 416, 416, 3])
                 I, B, C = sess.run([inputs, boxes, cl_de], feed_dict={inputs: img_resized})
-                #boxeS, scores, labels = cpu_nms(B, C, len(classes), max_boxes=3000, score_thresh=0.3, iou_thresh=0.4) #Bike
                 boxeS, scores, labels = cpu_nms(B, C, len(classes), max_boxes=3000, score_thresh=0.4, iou_thresh=0.5)
-                #result, dtimg, dt = draw_boxes(img_resized0, boxeS, scores, labels, classes, 416, tp)
-                #result, dtimg, dt, coord = draw_boxes(img_resized0, boxeS, scores, labels, classes, 416)
-                #image, coord, answ = draw_boxes(img, boxeS, scores, labels, classes, 416)
                 image, coord, answ = draw_boxes(img_resized0, boxeS, scores, labels, classes, 416, img)
-                #image, coord = draw_boxes(img, boxeS, scores, labels, classes, 416)
-                #fff, dt2 = imcr(np.array(dt))
-                #print (dtimg.shape)
                 cv2.imwrite("fffffff.jpg", image)
                 retval, image = cv2.imencode('.jpg', np.array(image))
-                #cv2.imwrite("fffffff.jpg", np.array(image))
                 
                 return image, coord, answ
-                #return fff, image, labels, boxeS
-                #return fff, dtimg
-             #except:
-                #return img, None
 
 class record():
      def __init__(self):
@@ -273,6 +220,7 @@ def saveImage(list, name, factor, cl):
                                                   int(int(bbox[2])*factor),
                                                   int(int(bbox[3])*factor)))#bbox[4]))
 """
+
 def saveImage(list, name, factor, cl):
         with open("RELabels/"+name+".txt", 'w') as f:
             #f.write('%d\n' %len(self.bboxList))
