@@ -14,7 +14,6 @@ import time
 import io
 from GPUi4 import gg as get_small_images
 from tornado.escape import json_encode
-#import ocr_s as ocr
 
 def getype(tp):
                 try:
