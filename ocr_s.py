@@ -55,15 +55,18 @@ f = numpy.load("weights.npz")
 param_vals = [f[n] for n in sorted(f.files, key=lambda s: int(s[4:]))]
 
 def make_scaled_ims(im, min_shape):
+    
     ratio = 1. / 2 ** 0.5
     shape = (im.shape[0] / ratio, im.shape[1] / ratio)
+    #(479.4183976444793, 388.90872965260115)#(im.shape[0] / ratio, im.shape[1] / ratio)
     print ("MIN SHAPE",shape, min_shape)
     while True:
         shape = (int(shape[0] * ratio), int(shape[1] * ratio))
         if shape[0] < min_shape[0] or shape[1] < min_shape[1]:
             break
         yield cv2.resize(im, (shape[1], shape[0]))
-
+#(479.4183976444793, 388.90872965260115)
+#(439.8204178980326, 403.0508652763321)
 
 def modif_detect(scaled_im):
     feed_dict = {x: scaled_im}
@@ -71,6 +74,8 @@ def modif_detect(scaled_im):
     answ = sess1.run(y, feed_dict=feed_dict)
     letter_probs = (answ[0,0,0,1:].reshape(9, len(common.CHARS)))
     letter_probs = common.softmax(letter_probs)
+    #FGHH = "".join(common.CHARS[i] for i in numpy.argmax(letter_probs, axis=1))
+    #print (answ.shape, FGHH)
     return "".join(common.CHARS[i] for i in numpy.argmax(letter_probs, axis=1))
 
 def detect(im, param_vals):

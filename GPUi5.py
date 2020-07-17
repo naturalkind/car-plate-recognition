@@ -143,6 +143,19 @@ def cpu_nms(boxes, scores, num_classes, max_boxes=50, score_thresh=0.4, iou_thre
 
     return boxes, score, label
 
+def from_yolo_to_cor(box, shape):
+    img_h, img_w, _ = shape
+    # x1, y1 = ((x + witdth)/2)*img_width, ((y + height)/2)*img_height
+    # x2, y2 = ((x - witdth)/2)*img_width, ((y - height)/2)*img_height
+    #------------
+    x1, y1 = int((box[0] + box[2]/2)*img_w), int((box[1] + box[3]/2)*img_h)
+    x2, y2 = int((box[0] - box[2]/2)*img_w), int((box[1] - box[3]/2)*img_h)
+    #WORK
+    #x1, y1 = int((box[0] + box[2]/2)*416), int((box[1] + box[3]/2)*416)
+    #x2, y2 = int((box[0] - box[2]/2)*416), int((box[1] - box[3]/2)*416)
+    return x1, y1, x2, y2
+
+
 def draw_boxes(image, boxes, scores, labels, classes, detection_size, img):
     """
     :param boxes, shape of  [num, 4]
@@ -181,17 +194,27 @@ def draw_boxes(image, boxes, scores, labels, classes, detection_size, img):
 #float(img.shape[1]/416)
 #
 #        #cord.append(coord)    
-        o0 = coord[0]
-        o1 = coord[1]
-        o2 = coord[2]
-        o3 = coord[3]
+#        o0 = coord[0]
+#        o1 = coord[1]
+#        o2 = coord[2]
+#        o3 = coord[3]
+        o0 = coord[0]-10
+        o1 = coord[1]-10
+        o2 = coord[2]+10
+        o3 = coord[3]+10
+        
+        o0 = o0*(img.shape[1] / 416.0)
+        o1 = o1*(img.shape[0] / 416.0)
+        o2 = o2*(img.shape[1] / 416.0)
+        o3 = o3*(img.shape[0] / 416.0)
         #print (box.shape, s, ratio, coord, bbox,o0, o1, o2, o3)
         if "plate" == classes[labels[i]].split("\n")[0]:# or "bus" == classes[labels[i]]:
                 #print (o1,o3, "----",o0,o2)
                 
                 #
                 #image = cv2.resize(image,(128,64))
-                img_t = np.array(image[o1-10:o3+10, o0-10:o2+10, :])#np.uint8
+                #img_t = np.array(image[o1-10:o3+10, o0-10:o2+10, :])#np.uint8
+                img_t = np.array(img[int(o1):int(o3), int(o0):int(o2), :])
                 img_resized0 = cv2.resize(img_t, (128, 64))
                 #retval, image = cv2.imencode('.jpg', )
                 
@@ -205,20 +228,27 @@ def draw_boxes(image, boxes, scores, labels, classes, detection_size, img):
                 print (img_.shape)
                 ssss = ocr.modif_detect(img_) #[:,:,:1]/255.
                 answ.append(ssss)
+                #img = cv2.putText(img, ssss, (int(o0), int(o1)), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36,255,12), 2)
 #                #ocr.ocr_img(np.array(image[o1-10:o3+10, o0-10:o2+10, :])))
-#        #"""
-        o0 = coord[0]-10
-        o1 = coord[1]-10
-        o2 = coord[2]+10
-        o3 = coord[3]+10
-        image[o1-3:o3, o0:o0+3, :] = _COLOR   # y
-        image[o1-3:o3, o2:o2+3, :] = _COLOR #255  # y
+#        x1, y1, x2, y2 = from_yolo_to_cor(bbox, img.shape)
 
-        image[o3-3:o3, o0:o2+3, :] = _COLOR  # x
-        image[o1-3:o1, o0:o2+3, :] = _COLOR  # x
-        #"""                
 
-    return image, cord, answ #
+        #"""
+#        o0 = coord[0]-10
+#        o1 = coord[1]-10
+#        o2 = coord[2]+10
+#        o3 = coord[3]+10
+        
+
+#        print (x1, y1, x2, y2)
+#        image[o1-3:o3, o0:o0+3, :] = _COLOR   # y
+#        image[o1-3:o3, o2:o2+3, :] = _COLOR #255  # y
+
+#        image[o3-3:o3, o0:o2+3, :] = _COLOR  # x
+#        image[o1-3:o1, o0:o2+3, :] = _COLOR  # x
+       # """                
+        img = cv2.rectangle(img, (int(o0), int(o1)), (int(o2), int(o3)), (0,255,0), 3)
+    return img, cord, answ #
     #return None, None, None
 
 import ocr_s as ocr
@@ -244,7 +274,8 @@ def gg(img):
                 #image, coord = draw_boxes(img, boxeS, scores, labels, classes, 416)
                 #fff, dt2 = imcr(np.array(dt))
                 #print (dtimg.shape)
-                cv2.imwrite("fffffff.jpg", image)
+                #imgs(image)
+                #cv2.imwrite("fffffff.jpg", image)
                 retval, image = cv2.imencode('.jpg', np.array(image))
                 #cv2.imwrite("fffffff.jpg", np.array(image))
                 
@@ -285,31 +316,10 @@ def saveImage(list, name, factor, cl):
                                                           int(int(bbox[3])*factor)))#bbox[4]))
 if __name__ == "__main__":
    #print "START"
-   flfl = glob.glob('hydrants error/*') #bicycles4x4 motos4x4 taxi4x4
-   #iop = cv2.imread('test_image/15081.jpg')
-   start = time.time()
-   R = record()
-   for ix, name in enumerate(flfl[:30000]):
-       
-       iop = cv2.imread("1 (127).jpg")
+       iop = cv2.imread("10700181-Image-1.jpeg")
        #imgs(iop)
-       P = gg(iop, 'fire hydrant')
+       P = gg(iop)
        #print ix, "END IMAGE", P[0], P[2], P[3]
-       PP = cv2.imdecode(P[1], cv2.IMREAD_UNCHANGED)
-       imgs(PP)
-       #if P[0] != []:
+       #PP = cv2.imdecode(P[1], cv2.IMREAD_UNCHANGED)
        
-       try:
-         #saveImage(P[3], name.split('/')[-1].split('.')[0], float(450)/float(416), P[2])
-         if P[2] == None :
-          #print ix, "END IMAGE", P[0], P[2]
-          R.save(name)
-       except TypeError:
-          pass
-       except ValueError:
-          pass
-          #saveImage(P[3], name.split('/')[-1].split('.')[0], max(450/1000, 450/1000., 1.), 0)
-
-   end = time.time()
-   print (end - start)/60
-
+       #if P[0] != []:

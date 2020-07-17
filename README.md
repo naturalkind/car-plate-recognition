@@ -1,4 +1,4 @@
-# распознавание автомобильных номеров 
+# распознавания автомобильных номеров 
 ### CNN(YOLOv3) -> CNN(VGG)
 YOLOv3 https://cloud.mail.ru/public/eUEX/4cLSzTCbz 2 класса<br/>
 VGG https://cloud.mail.ru/public/3ydY/4HEztvc2k OCR до 9 символов<br/>
