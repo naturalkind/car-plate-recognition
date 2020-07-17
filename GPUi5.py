@@ -143,17 +143,7 @@ def cpu_nms(boxes, scores, num_classes, max_boxes=50, score_thresh=0.4, iou_thre
 
     return boxes, score, label
 
-def from_yolo_to_cor(box, shape):
-    img_h, img_w, _ = shape
-    # x1, y1 = ((x + witdth)/2)*img_width, ((y + height)/2)*img_height
-    # x2, y2 = ((x - witdth)/2)*img_width, ((y - height)/2)*img_height
-    #------------
-    x1, y1 = int((box[0] + box[2]/2)*img_w), int((box[1] + box[3]/2)*img_h)
-    x2, y2 = int((box[0] - box[2]/2)*img_w), int((box[1] - box[3]/2)*img_h)
-    #WORK
-    #x1, y1 = int((box[0] + box[2]/2)*416), int((box[1] + box[3]/2)*416)
-    #x2, y2 = int((box[0] - box[2]/2)*416), int((box[1] - box[3]/2)*416)
-    return x1, y1, x2, y2
+
 
 
 def draw_boxes(image, boxes, scores, labels, classes, detection_size, img):
