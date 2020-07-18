@@ -218,6 +218,7 @@ def draw_boxes(image, boxes, scores, labels, classes, detection_size, img):
                 print (img_.shape)
                 ssss = ocr.modif_detect(img_) #[:,:,:1]/255.
                 answ.append(ssss)
+		img = cv2.putText(img, ssss, (int(o0), int(o1)-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36,255,12), 2)
                 #img = cv2.putText(img, ssss, (int(o0), int(o1)), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36,255,12), 2)
 #                #ocr.ocr_img(np.array(image[o1-10:o3+10, o0-10:o2+10, :])))
 #        x1, y1, x2, y2 = from_yolo_to_cor(bbox, img.shape)
