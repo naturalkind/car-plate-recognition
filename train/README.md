@@ -1,4 +1,5 @@
 https://ru.wikipedia.org/wiki/Европейские_регистрационные_знаки_транспортных_средств </br>
+https://ru.wikipedia.org/wiki/Регистрационные_знаки_транспортных_средств_в_России </br>
 https://www.avtobeginner.ru/nomer/ </br>
 https://github.com/shoorick/russian-road-sign-font </br>
 https://stackoverflow.com/questions/43060479/how-to-get-the-font-pixel-height-using-pils-imagefont-class </br>
