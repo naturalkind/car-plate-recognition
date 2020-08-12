@@ -8,6 +8,7 @@ https://itnext.io/how-to-wrap-text-on-image-using-python-8f569860f89e </br>
 https://github.com/python-pillow/Pillow/issues/3977 </br>
 http://design-mania.ru/downloads/fonts/raspoznavanie-shriftov/ </br>
 http://docs.cntd.ru/document/1200160380 </br>
+https://www.car72.ru/nomer/ </br>
 
 Exact size depends on many factors. I'll just show you how to calculate different metrics of font.
 <img src="https://i.stack.imgur.com/gSBad.png" alt="">
