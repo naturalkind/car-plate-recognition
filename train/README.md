@@ -39,3 +39,7 @@ a) координаты</br>
 а) ответ</br>
 б) коэффициент для каждой буквы или для общего текста</br>
 Изображения буду хранить в исходном состоянии</br>
+https://github.com/fengxinjie/Transformer-OCR </br>
+https://github.com/soumik12345/Automatic-Number-Plate-Recognition </br>
+https://github.com/watsonyanghx/CNN_LSTM_CTC_Tensorflow </br>
+https://github.com/synckey/tensorflow_lstm_ctc_ocr </br>
