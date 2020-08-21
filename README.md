@@ -4,6 +4,7 @@ YOLOv3 https://cloud.mail.ru/public/eUEX/4cLSzTCbz 2 класса<br/>
 VGG https://cloud.mail.ru/public/3ydY/4HEztvc2k OCR до 9 символов<br/>
 python2/python3 serv.py<br/>
 systemctl daemon:<br/>
+#sudo nano /etc/systemd/system/bot.service<br/>
 ```
 [Unit]
 Description=ANPR
@@ -21,12 +22,13 @@ Type=simple
 [Install]
 WantedBy=multi-user.target
 ```
-#sudo nano /etc/systemd/system/bot.service<br/>
 #sudo systemctl daemon-reload<br/>
 #sudo systemctl enable bot.service<br/>
 #sudo systemctl daemon-reload<br/>
 #sudo systemctl start bot.service<br/>
 #sudo systemctl status bot.service<br/>
+#sudo systemctl stop bot.service<br/>
+
 #sudo systemctl disable bot.service<br/>
 #sudo systemctl restart bot.service<br/>
 
