@@ -48,7 +48,7 @@ class MainHandler(tornado.web.RequestHandler):
                   
                 if answer[1] != None:
                    
-                   obj = {"id": "", "text": str(answer[2]), "solved": True, "status": "OK", "type": "plate", "time": (time.time() - start_time), 'img': base64.b64encode(answer[0])}
+                   obj = {"id": "", "text": str(answer[2]), "solved": True, "status": "OK", "type": "plate", "time": (time.time() - start_time), 'img': base64.b64encode(answer[0]).decode()}
                 else:
                    obj = {"id": "", "text": "", "solved": False, "status": "OK", "type": "plate", "time": (time.time() - start_time), 'img': base64.b64encode(answer[0])}
                 op = json_encode(obj)
