@@ -14,6 +14,7 @@ import time
 import io
 from GPUi5 import gg as get_small_images
 from tornado.escape import json_encode
+from mongodb import *
 #import ocr_s as ocr
 
 def getype(tp):
@@ -49,9 +50,11 @@ class MainHandler(tornado.web.RequestHandler):
                 if answer[1] != None:
                    
                    obj = {"id": "", "text": str(answer[2]), "solved": True, "status": "OK", "type": "plate", "time": (time.time() - start_time), 'img': base64.b64encode(answer[0]).decode()}
-                else:
+                   imgs_data_write(file_bytes, str(answer[2]), str(answer[-1]), str(answer[1]))
+		else:
                    obj = {"id": "", "text": "", "solved": False, "status": "OK", "type": "plate", "time": (time.time() - start_time), 'img': base64.b64encode(answer[0])}
-                op = json_encode(obj)
+                   imgs_data_write(file_bytes, "", "", "")
+		op = json_encode(obj)
                 self.write(op)
 
 #                if answer != []:
