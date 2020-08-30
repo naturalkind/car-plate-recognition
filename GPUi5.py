@@ -239,7 +239,7 @@ def draw_boxes(image, boxes, scores, labels, classes, detection_size, img):
 #        image[o1-3:o1, o0:o2+3, :] = _COLOR  # x
        # """                
         img = cv2.rectangle(img, (int(o0), int(o1)), (int(o2), int(o3)), (0,255,0), 3)
-    return img, cord, answ #
+    return img, coord, answ #
     #return None, None, None
 
 import ocr_s as ocr
@@ -270,7 +270,7 @@ def gg(img):
                 retval, image = cv2.imencode('.jpg', np.array(image))
                 #cv2.imwrite("fffffff.jpg", np.array(image))
                 
-                return image, coord, answ
+                return image, coord, answ, scores
                 #return fff, image, labels, boxeS
                 #return fff, dtimg
              #except:
