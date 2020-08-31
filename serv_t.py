@@ -30,7 +30,7 @@ class RequestLib(object):
         return get_page
             
 sess = RequestLib()
-acc_key = "1314995842:AAFIp92pZYhSpGhaeX811fGD63-KazTbiu8"
+acc_key = ""
 
 class getToken(tornado.web.RequestHandler):
     def get(self):
