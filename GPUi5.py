@@ -54,24 +54,6 @@ gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.50)
 sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
 sess.run(load_ops)
 
-def imcr(i):
-        NWLS = []
-        if True:
-	        im_w, im_h, im_c = i.shape
-	        w, h = im_w//4, im_h//4
-	        w_num, h_num = int(im_w/w), int(im_h/h)
-	        num = 0
-	        for wi in range(0, w_num):
-                    for hi in range(0, h_num):
-                        num += 1
-                        P_R = (np.sum(i[wi*w:(wi+1)*w, hi*h:(hi+1)*h, :]) / 32448) * 100
-                        P_R = P_R - 100
-                        if 20 < int(P_R):
-                              NWLS.append(str(num))
-                        else:
-                              pass
-        return NWLS, np.array(i)
-
 
 def py_nms(boxes, scores, max_boxes=50, iou_thresh=0.5):
     """
@@ -163,31 +145,8 @@ def draw_boxes(image, boxes, scores, labels, classes, detection_size, img):
     for i in range(len(labels)): # for each bounding box, do:
         bbox, score, label = boxes[i], scores[i], classes[labels[i]]
         bbox_text = "%s %.2f" %(label, score)
-        # convert_to_original_size
-#        detection_size, original_size = float(detection_size)/float(img.shape[0]), float(detection_size)/float(img.shape[1]) #np.array(detection_size), np.array(image.shape)
-#        box = bbox.reshape(2, 2) * ratio
-#        print (detection_size, original_size)
-#        ratio = np.array((img.shape[0], img.shape[1])) / np.array((detection_size, detection_size))
         print (bbox)
-#        box = bbox.reshape(2, 2) * ratio
-#        s = list(box.reshape(-1))
-#        
-##        ratio = float(original_size) / float(detection_size)
-##        bbox = list((bbox.reshape(2,2) * ratio).reshape(-1))
-##        #print  bbox_text, detection_size, original_size, image.shape, bbox, ratio, new.shape
-        #detection_size, original_size = np.array(detection_size), np.array(image.shape[1])
-        #ratio = float(original_size) / float(detection_size)
-        #bbox = list((bbox.reshape(2,2) * ratio).reshape(-1))
         coord = [abs(int(x)) for x in bbox]
-#        
-#float(img.shape[0]/416)
-#float(img.shape[1]/416)
-#
-#        #cord.append(coord)    
-#        o0 = coord[0]
-#        o1 = coord[1]
-#        o2 = coord[2]
-#        o3 = coord[3]
         o0 = coord[0]-10
         o1 = coord[1]-10
         o2 = coord[2]+10
@@ -198,38 +157,18 @@ def draw_boxes(image, boxes, scores, labels, classes, detection_size, img):
         o2 = o2*(img.shape[1] / 416.0)
         o3 = o3*(img.shape[0] / 416.0)
         #print (box.shape, s, ratio, coord, bbox,o0, o1, o2, o3)
-        if "plate" == classes[labels[i]].split("\n")[0]:# or "bus" == classes[labels[i]]:
-                #print (o1,o3, "----",o0,o2)
-                
-                #
-                #image = cv2.resize(image,(128,64))
-                #img_t = np.array(image[o1-10:o3+10, o0-10:o2+10, :])#np.uint8
+        if "plate":# == classes[labels[i]].split("\n")[0]:# or "bus" == classes[labels[i]]:
                 img_t = np.array(img[int(o1):int(o3), int(o0):int(o2), :])
                 img_resized0 = cv2.resize(img_t, (128, 64))
-                #retval, image = cv2.imencode('.jpg', )
                 
                 print (">>>>>>>>>>", coord, img_t.shape, img_resized0.shape)
-                #modif_detect
-                #
-                #
-                
                 img_ = img_resized0[:,:,0] / 255.
                 img_ = np.reshape(img_, [1,64,128])
                 print (img_.shape)
                 ssss = ocr.modif_detect(img_) #[:,:,:1]/255.
                 answ.append(ssss)
-		img = cv2.putText(img, ssss, (int(o0), int(o1)-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36,255,12), 2)
-                #img = cv2.putText(img, ssss, (int(o0), int(o1)), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36,255,12), 2)
-#                #ocr.ocr_img(np.array(image[o1-10:o3+10, o0-10:o2+10, :])))
-#        x1, y1, x2, y2 = from_yolo_to_cor(bbox, img.shape)
+                img = cv2.putText(img, ssss, (int(o0), int(o1)-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36,255,12), 2)
 
-
-        #"""
-#        o0 = coord[0]-10
-#        o1 = coord[1]-10
-#        o2 = coord[2]+10
-#        o3 = coord[3]+10
-        
 
 #        print (x1, y1, x2, y2)
 #        image[o1-3:o3, o0:o0+3, :] = _COLOR   # y
@@ -245,36 +184,21 @@ def draw_boxes(image, boxes, scores, labels, classes, detection_size, img):
 import ocr_s as ocr
 def gg(img):
         if img.shape[0] != 100:
-             #try:
-               #img_resized0 = cv2.resize(img, (416, 416))
-               #image, answ = ocr.ocr_img(img_resized0)
-               #retval, image = cv2.imencode('.jpg', np.array(image))
-                #img.resize(size=(size, size))
-               #return image, answ
-
 
                 img_resized0 = cv2.resize(img, (size, size)) #img.resize(size=(size, size))
                 img_resized = np.reshape(img_resized0, [1, 416, 416, 3])
                 I, B, C = sess.run([inputs, boxes, cl_de], feed_dict={inputs: img_resized})
-                boxeS, scores, labels = cpu_nms(B, C, len(classes), max_boxes=3000, score_thresh=0.3, iou_thresh=0.4) #Bike
+                boxeS, scores, labels = cpu_nms(B, C, len(classes), max_boxes=3000, score_thresh=0.1, iou_thresh=0.2)
                 #boxeS, scores, labels = cpu_nms(B, C, len(classes), max_boxes=3000, score_thresh=0.4, iou_thresh=0.5)
-                #result, dtimg, dt = draw_boxes(img_resized0, boxeS, scores, labels, classes, 416, tp)
-                #result, dtimg, dt, coord = draw_boxes(img_resized0, boxeS, scores, labels, classes, 416)
-                #image, coord, answ = draw_boxes(img, boxeS, scores, labels, classes, 416)
-                image, coord, answ = draw_boxes(img_resized0, boxeS, scores, labels, classes, 416, img)
-                #image, coord = draw_boxes(img, boxeS, scores, labels, classes, 416)
-                #fff, dt2 = imcr(np.array(dt))
-                #print (dtimg.shape)
-                #imgs(image)
-                #cv2.imwrite("fffffff.jpg", image)
+                try:
+                   image, coord, answ = draw_boxes(img_resized0, boxeS, scores, labels, classes, 416, img)
+                except:
+                   image = ocr.ocr_img(img)
+                   coord = []
+                   answ = [] 
                 retval, image = cv2.imencode('.jpg', np.array(image))
-                #cv2.imwrite("fffffff.jpg", np.array(image))
                 
                 return image, coord, answ, scores
-                #return fff, image, labels, boxeS
-                #return fff, dtimg
-             #except:
-                #return img, None
 
 class record():
      def __init__(self):
@@ -310,7 +234,3 @@ if __name__ == "__main__":
        iop = cv2.imread("10700181-Image-1.jpeg")
        #imgs(iop)
        P = gg(iop)
-       #print ix, "END IMAGE", P[0], P[2], P[3]
-       #PP = cv2.imdecode(P[1], cv2.IMREAD_UNCHANGED)
-       
-       #if P[0] != []:

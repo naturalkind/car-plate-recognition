@@ -191,13 +191,16 @@ def imgs_data_read():
 if __name__ == "__main__":
         print ("Start")
         db = DataBase("anpr")
+#--->        
         db.create_collection("anpr") 
-        for i in db.see_all_post():
-               print (i)
-               img = db.file.get(i["images"]).read()
-               nparr = np.fromstring(img, np.uint8)
-               img_t = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-               imgs(img_t)
+        print (len(db.see_all_post()))
+#        for i in db.see_all_post():
+#               print (i)
+#               img = db.file.get(i["images"]).read()
+#               nparr = np.fromstring(img, np.uint8)
+#               img_t = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+#               print (img_t.shape)
+               #imgs(img_t)
         #images_data()
         
 #        col = db.see_collection()
