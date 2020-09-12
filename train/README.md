@@ -49,4 +49,5 @@ https://github.com/jimmysh2/CNN-LSTM-CTC-OCR-Tensorflow </br>
 https://github.com/zfxxfeng/cnn_lstm_ctc_ocr_for_ICPR </br>
 https://github.com/githubharald/SimpleHTR </br>
 https://github.com/bai-shang/crnn_ctc_ocr_tf </br>
+https://arxiv.org/pdf/1910.05085.pdf </br>
 https://cs231n.github.io/convolutional-networks/#conv </br>
