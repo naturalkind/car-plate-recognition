@@ -45,6 +45,7 @@ https://github.com/soumik12345/Automatic-Number-Plate-Recognition </br>
 https://github.com/watsonyanghx/CNN_LSTM_CTC_Tensorflow </br>
 https://github.com/synckey/tensorflow_lstm_ctc_ocr </br>
 https://github.com/weinman/cnn_lstm_ctc_ocr </br>
+https://github.com/wushilian/STN_CNN_LSTM_CTC_TensorFlow/ </br>
 https://github.com/leitro/handwrittenDigitSequenceRec </br>
 https://github.com/jimmysh2/CNN-LSTM-CTC-OCR-Tensorflow </br>
 https://github.com/zfxxfeng/cnn_lstm_ctc_ocr_for_ICPR </br>
