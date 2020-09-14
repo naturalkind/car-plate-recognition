@@ -53,3 +53,4 @@ https://github.com/githubharald/SimpleHTR </br>
 https://github.com/bai-shang/crnn_ctc_ocr_tf </br>
 https://arxiv.org/pdf/1910.05085.pdf </br>
 https://cs231n.github.io/convolutional-networks/#conv </br>
+https://github.com/ilovin/lstm_ctc_ocr </br>
