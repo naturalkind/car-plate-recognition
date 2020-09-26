@@ -12,6 +12,7 @@ https://www.car72.ru/nomer/ </br>
 https://habr.com/ru/company/smartengines/blog/264677/ </br>
 https://habr.com/ru/post/439330/</br>
 https://nanonets.com/blog/ocr-with-tesseract/ </br>
+https://www.learnopencv.com/deep-learning-based-text-recognition-ocr-using-tesseract-and-opencv/ </br>
 
 Exact size depends on many factors. I'll just show you how to calculate different metrics of font.
 <img src="https://i.stack.imgur.com/gSBad.png" alt="">
