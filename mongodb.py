@@ -155,7 +155,7 @@ def images_data():
 #            imgs(img)  
 
 db = DataBase("anpr")
-def imgs_data_write(x, answ, score, coord):
+def imgs_data_write(x, answ, answ_sw, score, coord, coord_sw):
         name = str(uuid.uuid4())[:7]
         print(name)
         imageID = db.file.put(x.tostring(), encoding='utf-8')
@@ -163,8 +163,10 @@ def imgs_data_write(x, answ, score, coord):
             'name': name,
             'images': imageID,
             'answ': answ,
+            'answ_sw': answ_sw,
             'score_yolo': score,
-            'coord': coord
+            'coord': coord,
+            'coord_sw': coord_sw
         }   
         db.create_collection("anpr") 
         print(db.create_post(dump))
@@ -194,12 +196,18 @@ if __name__ == "__main__":
 #--->        
         db.create_collection("anpr") 
         print (len(db.see_all_post()))
+        #check
 #        for i in db.see_all_post():
 #               print (i)
 #               img = db.file.get(i["images"]).read()
 #               nparr = np.fromstring(img, np.uint8)
 #               img_t = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-#               print (img_t.shape)
+#               im_name = 'check/'+i['name'] + ".jpg"
+#               cv2.imwrite(im_name, img_t) 
+#               file = open('check/'+i['name'] + ".txt","w")
+#               file.write(i["answ"])
+#               file.close()
+               #print (img_t.shape)
                #imgs(img_t)
         #images_data()
         
