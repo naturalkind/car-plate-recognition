@@ -300,7 +300,7 @@ def train(learn_rate, report_steps, batch_size, initial_weights=None):
     with tf.Session(config=tf.ConfigProto(gpu_options=gpu_options)) as sess:
         if initial_weights is not None:
             #saver.restore(sess, "model/model.ckpt")
-            saver.restore(sess, "model_modif/model.ckpt")
+            saver.restore(sess, "model_keras/model.ckpt")
         else:    
             sess.run(init)
 
@@ -326,7 +326,7 @@ def train(learn_rate, report_steps, batch_size, initial_weights=None):
 
         except KeyboardInterrupt:
              #model.save("h.npz")
-             save_path = saver.save(sess, "model_modif/model.ckpt")
+             save_path = saver.save(sess, "model_keras/model.ckpt")
              print("Model saved in path: %s" % save_path)
              print ("STOP")
 

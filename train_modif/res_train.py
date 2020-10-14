@@ -290,7 +290,8 @@ def train(learn_rate, report_steps, batch_size, initial_weights=None):
     gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.60)
     with tf.Session(config=tf.ConfigProto(gpu_options=gpu_options)) as sess:
         if initial_weights is not None:
-            saver.restore(sess, "model/model.ckpt")
+            #saver.restore(sess, "model_98_96/model.ckpt")
+            saver.restore(sess, "model_98_90/model.ckpt")
         else:    
             sess.run(init)
 
@@ -328,15 +329,16 @@ def detect():
     with tf.Session(config=tf.ConfigProto(gpu_options=gpu_options)) as sess:
         saver.restore(sess, "model/model.ckpt")
         #im = cv2.imread("test/00000035_KA1804AO_1.png")[:, :, 0].astype(numpy.float32) / 255.
-        im = cv2.imread("/media/sadko/1b32d2c7-3fcf-4c94-ad20-4fb130a7a7d4/PLAYGROUND/OCR/generate_train/test/00000827_B999EX40_1.png")[:, :, 0].astype(numpy.float32) / 255.
-        
+        im = cv2.imread("/media/sadko/1b32d2c7-3fcf-4c94-ad20-4fb130a7a7d4/PLAYGROUND/OCR/generate_train/test/00000374_AM1917CP_1.png")[:, :, 0].astype(numpy.float32) / 255.
+        im_show = im
         im = np.reshape(im,[1,64,128])
         feed_dict = {x: im}
         answ = sess.run(best, feed_dict=feed_dict)
         #letter_probs = (answ[0,0,0,1:].reshape(9, len(common.CHARS)))
         #letter_probs = common.softmax(letter_probs)  
-        print (answ.shape, "".join(common.CHARS[i] for i in answ[0]))
         
+        print (answ.shape, "".join(common.CHARS[i] for i in answ[0]))
+        imgs(im_show)
 if __name__ == "__main__":
     if len(sys.argv) > 1:
        initial_weights = sys.argv

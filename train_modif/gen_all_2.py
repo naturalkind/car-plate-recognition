@@ -62,7 +62,7 @@ class DATA(object):
        path = dir_name+"/"
        print ("PARSING",path)
        for r, d, f in os.walk(path):
-           for ix, file in enumerate(f):
+           for ix, file in enumerate(f):#[:20000]
                            #print (file)
                       if ".png" in file: #".jpg" or 
                           img = cv2.imread(os.path.join(r, file))

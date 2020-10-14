@@ -248,7 +248,7 @@ def train(learn_rate, report_steps, batch_size, initial_weights=None):
     gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.60)
     with tf.Session(config=tf.ConfigProto(gpu_options=gpu_options)) as sess:
         if initial_weights is not None:
-            saver.restore(sess, "model_modif/model.ckpt")
+            saver.restore(sess, "model_slim/model.ckpt")
         else:    
             sess.run(init)
 
@@ -274,7 +274,7 @@ def train(learn_rate, report_steps, batch_size, initial_weights=None):
 
         except KeyboardInterrupt:
              #model.save("h.npz")
-             save_path = saver.save(sess, "model_modif/model.ckpt")
+             save_path = saver.save(sess, "model_slim/model.ckpt")
              print("Model saved in path: %s" % save_path)
              print ("STOP")
 
@@ -285,7 +285,7 @@ def detect():
     best = tf.argmax(tf.reshape(y[:, 1:], [-1, 9, len(common.CHARS)]), 2)
     with tf.Session(config=tf.ConfigProto(gpu_options=gpu_options)) as sess:
         set_session(sess)
-        saver.restore(sess, "model_modif/model.ckpt")
+        saver.restore(sess, "model_slim/model.ckpt")
         #im = cv2.imread("test/00000035_KA1804AO_1.png")[:, :, 0].astype(numpy.float32) / 255.
         im = cv2.imread("/media/sadko/1b32d2c7-3fcf-4c94-ad20-4fb130a7a7d4/PLAYGROUND/OCR/generate_train/test/00000827_B999EX40_1.png")[:, :, 0].astype(numpy.float32) / 255.
         
