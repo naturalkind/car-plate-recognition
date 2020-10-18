@@ -30,7 +30,7 @@ class RequestLib(object):
         return get_page
             
 sess = RequestLib()
-acc_key = ""
+acc_key = "1314995842:AAFIp92pZYhSpGhaeX811fGD63-KazTbiu8"
 
 class getToken(tornado.web.RequestHandler):
     def get(self):
@@ -55,9 +55,13 @@ class getToken(tornado.web.RequestHandler):
            img_t = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
            answer = get_small_images(img_t)
            if answer[1] != None:
-                imgs_data_write(nparr, str(answer[2]), str(answer[-1]), str(answer[1]))
+                imgs_data_write(nparr, str(answer[2]), str(answer[-2]), str(answer[-3]), str(answer[1]), str(answer[-1]))
                 print (img_t.shape, answer[2])
-                url = "https://api.telegram.org/bot"+acc_key+"/sendMessage?chat_id="+str(chat_id)+"&text="+str(answer[2])+";"+str(answer[-1])+"&parse_mode=html"
+                ANSW = "{}; {}; coord 1: {}; coord 2: {}; score: {};".format(str(answer[2]), str(answer[-2]), 
+                                                                             str(answer[1]), str(answer[-1]),
+                                                                             str(answer[-3]))
+                #+"sc;"++";"
+                url = "https://api.telegram.org/bot"+acc_key+"/sendMessage?chat_id="+str(chat_id)+"&text="+ANSW+"&parse_mode=html"
                 r = sess.get(url)
                 url = "https://api.telegram.org/bot"+acc_key+"/sendPhoto";
                 files = {'photo': answer[0]}
@@ -65,7 +69,7 @@ class getToken(tornado.web.RequestHandler):
                 r = R.post(url, files=files, data=data) 
            if answer[1] == []:
                 url = "https://api.telegram.org/bot"+acc_key+"/sendMessage?chat_id="+str(chat_id)+"&text="+str("не распознано")+"&parse_mode=html"
-                imgs_data_write(nparr, "", "", "")
+                imgs_data_write(nparr, "", "", "", "", "")
                 r = sess.get(url)
 
         #chat_id = data["message"]["from"]["id"]
