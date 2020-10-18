@@ -39,13 +39,13 @@ class MainHandler(tornado.web.RequestHandler):
                 print ((end - start)/60, answer[1], answer[2])
                 #dtimg = ocr.ocr_img(answer[0])
                   
-                if answer[1] != None:
+                if answer[1] != []:
                    
-                   obj = {"id": "", "text": str(answer[2]), "solved": True, "status": "OK", "type": "plate", "time": (time.time() - start_time), 'img': base64.b64encode(answer[0]).decode()}
-                   imgs_data_write(file_bytes, str(answer[2]), str(answer[-1]), str(answer[1]))
+                   obj = {"id": "", "text": str(answer[2])+"<---->"+str(answer[-2]), "solved": True, "status": "OK", "type": "plate", "time": (time.time() - start_time), 'img': base64.b64encode(answer[0]).decode()}
+                   imgs_data_write(file_bytes, str(answer[2]), str(answer[-2]), str(answer[-3]), str(answer[1]), str(answer[-1]))
                 else:
-                   obj = {"id": "", "text": "", "solved": False, "status": "OK", "type": "plate", "time": (time.time() - start_time), 'img': base64.b64encode(answer[0])}
-                   imgs_data_write(file_bytes, "", "", "")
+                   obj = {"id": "", "text": "", "solved": False, "status": "OK", "type": "plate", "time": (time.time() - start_time), 'img': base64.b64encode(answer[0]).decode()}
+                   imgs_data_write(file_bytes, "", "", "", "", "")
 
                 op = json_encode(obj)
                 self.write(op)
@@ -54,7 +54,7 @@ class MainHandler(tornado.web.RequestHandler):
 def make_app():
     return tornado.web.Application([
         (r"/", MainHandler),
-	(r"/(robots-AI.jpg)", tornado.web.StaticFileHandler, {'path':'./'}),
+        (r"/(robots-AI.jpg)", tornado.web.StaticFileHandler, {'path':'./'}),
     ])
 
 if __name__ == "__main__":
@@ -63,7 +63,6 @@ if __name__ == "__main__":
     http_server = tornado.httpserver.HTTPServer(application, ssl_options={"certfile":"ssl/cert.crt",
                                                                           "keyfile":"ssl/cert.key",
                                                                           "ssl_version": ssl.PROTOCOL_TLSv1})
-    #http_server = tornado.httpserver.HTTPServer(application)
     http_server.listen(8443)
     tornado.ioloop.IOLoop.current().start()
 
