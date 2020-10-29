@@ -1,3 +1,5 @@
+###Видео изготовления:</br>
+https://www.youtube.com/watch?v=TPfbKqNIYFY </br>
 https://ru.wikipedia.org/wiki/Европейские_регистрационные_знаки_транспортных_средств </br>
 https://ru.wikipedia.org/wiki/Регистрационные_знаки_транспортных_средств_в_России </br>
 https://www.google.com/search?channel=fs&sxsrf=ALeKk03-9wmjH5WdytmWBvWY-BRP3Man_w:1597146493374&source=univ&tbm=isch&q=знаки+государственные+регистрационные+транспортных+средств+шрифт&client=ubuntu&sa=X&ved=2ahUKEwiJ2JCripPrAhXosYsKHbDPCEYQsAR6BAgKEAE </br>
