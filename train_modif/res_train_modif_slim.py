@@ -9,7 +9,6 @@ import time
 
 import cv2
 import numpy
-import tensorflow as tf
 import common
 import gen_all_2 as gen
 
