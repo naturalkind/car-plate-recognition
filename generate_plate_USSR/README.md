@@ -61,3 +61,5 @@ https://github.com/quangnhat185/Plate_detect_and_recognize </br>
 https://github.com/sergiomsilva/alpr-unconstrained </br>
 https://github.com/matthewearl/deep-anpr </br>
 https://github.com/simple2048/CarPlateIdentity </br>
+https://github.com/uvess75326/RussianCarPlateBlurring/blob/master/Russian%20car%20number%20plate%20blurring.ipynb </br>
+
