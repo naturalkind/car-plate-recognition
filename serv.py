@@ -59,7 +59,7 @@ def make_app():
 
 if __name__ == "__main__":
     app = make_app()
-    app.listen(8800) #95.216.240.243
+    app.listen(8000) #95.216.240.243
     http_server = tornado.httpserver.HTTPServer(application, ssl_options={"certfile":"ssl/cert.crt",
                                                                           "keyfile":"ssl/cert.key",
                                                                           "ssl_version": ssl.PROTOCOL_TLSv1})

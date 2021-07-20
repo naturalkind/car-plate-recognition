@@ -69,7 +69,7 @@ function toCanv(e) {
 function send(){
 	console.log("ok");
 	var http = new XMLHttpRequest();
-	http.open("POST", "http://95.216.240.243:8800/");
+	http.open("POST", "http://178.158.131.41:8000/");
 	http.setRequestHeader("Content-type","application/json; charset=utf-8");
         var im = canvas.toDataURL().split(',')[1]
 	var work = JSON.stringify({"image": im, "on":"on"});
