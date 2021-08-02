@@ -53,20 +53,20 @@ def crt(files, idx, dq):
     print (files, idx, dq)
     F = open('tr'+str(idx)+'.txt', 'w')
     for ig, g in enumerate(files):
-            print (dq[g][0])
+            
             with open("Labels/"+g+".txt", 'r') as f:
-                if len(f.read()) != 0:
-                
-                    #flopen = open(str(dq[g][0]), "rb").read()
+                f = f.readlines()
+                if len(f) != 0:
+                    
                     img = cv2.imread(str(dq[g][0]))
                     to_vl = '/home/sadko/images/plate/'+dq[g][0].split("/")[-1]
-                    #flsave = open(to_vl, "wb").write(flopen)
+#                   #flopen = open(str(dq[g][0]), "rb").read()
+#                   #flsave = open(to_vl, "wb").write(flopen)
                     cv2.imwrite(to_vl, img)
-                    to_vl = to_vl +'\n'
-                    F.write(to_vl)  
-                
+                    F.write(to_vl +'\n')  
                     xml = ''
                     for o in f:
+                       print (dq[g][0], o)
                        gh = o.split("\n")[0]
                        C = gh.split(" ")[0]
                        gh = gh.split(" ")[1:]
@@ -76,8 +76,7 @@ def crt(files, idx, dq):
                        bb = convert((w,h), b)       
 
                        xml += f'{CLASS.index(C)} ' + ' '.join([str(a) for a in bb]) + '\n'
-                       #draw_boxes(img, bb)
-                    
+#                       draw_boxes(img, bb)
                     fl = open('TRAIN_LABEL/' + g + '.txt', 'w')
                     fl.write(xml)
                     fl.close()
