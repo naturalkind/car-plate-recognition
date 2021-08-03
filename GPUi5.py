@@ -12,7 +12,7 @@ from yolo_v3_gpu import yolo_v3
 #class_names = 'coco2.names'
 #weights_file = 'yolov3_chi.weights'
 class_names = 'plate.names'
-weights_file = 'yolov3.backup'#'car_plate.weights'
+weights_file = 'weights/yolov3.backup'#'car_plate.weights'
 #class_names = 'coco.names'
 #weights_file = 'yolov3.weights'
 size = 416

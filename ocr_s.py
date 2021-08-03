@@ -51,7 +51,7 @@ gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.50)
 sess1 = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
 x, y, params = model.get_detect_model()
 
-f = numpy.load("weights.npz")
+f = numpy.load("weights/weights.npz")
 param_vals = [f[n] for n in sorted(f.files, key=lambda s: int(s[4:]))]
 
 def make_scaled_ims(im, min_shape):
