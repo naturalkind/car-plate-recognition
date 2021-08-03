@@ -2,6 +2,7 @@
 ### CNN(YOLOv3) -> CNN(VGG)
 YOLOv3 https://cloud.mail.ru/public/eUEX/4cLSzTCbz 2 класса<br/>
 VGG https://cloud.mail.ru/public/3ydY/4HEztvc2k OCR до 9 символов<br/>
+https://cloud.mail.ru/public/Khq8/8QpoP9BiB <br/>
 python2/python3 serv.py<br/>
 systemctl daemon:<br/>
 #sudo nano /etc/systemd/system/bot.service<br/>
