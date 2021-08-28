@@ -27,7 +27,7 @@ def draw_boxes(img, boxes):
     x1, y1, x2, y2 = from_yolo_to_cor(boxes, img.shape)
     print (x1, y1, x2, y2)
     img = cv2.rectangle(img, (x1, y1), (x2, y2), (0,255,0), 3)
-    
+    return x1, y1, x2, y2
 
 class DATA(object):
         def __init__(self):
@@ -50,20 +50,33 @@ class DATA(object):
                            
                            
 D = DATA()
-D.parseIMG("/home/sadko/images/_plate")  
+D.parseIMG("/home/sadko/images/plateWORK")  
 img_file = D.file 
 
 G = DATA()
-G.parseIMG("/home/sadko/labels/plate") 
+G.parseIMG("/home/sadko/labels/plateWORK") 
 lable_file = G.file
- 
+
+CLASS = open("class.txt", "r")
+CLASS = [i.split("\n")[0] for i in CLASS]
+
 for i in img_file:
     img = cv2.imread(img_file[i][0])
     #imgs(img)
     F = open(lable_file[i][0],"r")
+    
+    fl = open('Labels_convert/' + lable_file[i][0].split("/")[-1], 'w')
+    xml = ""
     for o in F:
         s_str = o.split("\n")[0]
-        coord = [float(a) for a in s_str.split(" ")[1:]]
-        draw_boxes(img, coord)
-    imgs(img)
+        #coord = [float(a) for a in s_str.split(" ")[1:]]
+        coord = [float(a) for a in s_str.split(" ")]
+        class_idx = int(coord[0])
+        coord = coord[1:]
+        print (class_idx, CLASS[class_idx])
+        save_data = draw_boxes(img, coord)
+        xml += f'{CLASS[class_idx]} ' + ' '.join([str(a) for a in save_data]) + '\n'
+    fl.write(xml)
+    fl.close()
+    #imgs(img)
     #print (F)#(img_file[i][0], lable_file[i][0])                                            
