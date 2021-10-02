@@ -20,7 +20,7 @@ from serv_t import *
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
-        self.render("index3.html", title="Нейронная сеть/Тренировка")
+        self.render("index.html", title="Нейронная сеть/Тренировка")
     def post(self):
         nameFile = str(uuid.uuid4())[:12]
         self.set_header("Content-Type", "application/json")
