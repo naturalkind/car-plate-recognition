@@ -1,2 +1,4 @@
 ssl/
 weights/
+venv/
+__pycache__/
